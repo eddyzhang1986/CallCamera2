@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>借款平台</title>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no">
+    <script src="../../bootstrap/js/jquery-1.11.1.min.js"></script>
+    <script src="../../bootstrap/lay/layui.all.js"></script>
+
+
+
+    <link href="../../bootstrap/layerui/need/layer.css" rel="stylesheet" />
+    <script src="../../bootstrap/layerui/layer.js"></script>
+
+    <script>
+
+        function getDomain() {
+
+            var u = window.location.protocol + "//" + document.domain;
+
+            return u;
+        }
+
+
+        function CallParentCamera() {
+
+            var dm = getDomain();
+
+            alert(dm);
+
+            window.parent.postMessage({ cmd: 'callCamera', domain: dm }, 'http://testv2.caimomo.com');
+
+            //window.parent.abc();
+            //$("#takephoto").attr("src", "/MobileWeb/Report/Shd/subcall.html?r="+Math.random());
+        }
+
+
+        window.addEventListener("message", function (obj) {
+
+            var data = obj.data;
+            //alert(JSON.stringify(data))
+            //var action = data.action;
+            //var data = data.data;
+            //alert(data);
+
+            if (data.type == "receiveImg") {
+                $('#img_pic').attr("src", "data:image/jpeg;base64," + data.img);
+            }
+
+            //alert(obj);
+        });
+
+
+    </script>
+
+
+</head>
+<body>
+
+
+    <img id="img_pic" width="200" height="200" />
+    <input type="button" value="测试调用摄像头" onclick="CallParentCamera();" />
+</body>
+</html>
